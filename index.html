@@ -4637,11 +4637,27 @@
                 obs.yPx += speedPx * (dt / 1000);
                 obs.el.style.transform = `translateY(${obs.yPx}px)`;
 
-                // collision detection using bounding rects
+                // collision detection using bounding rects dengan margin yang lebih ketat
                 if (!obs.hit) {
                     const obsRect = obs.el.getBoundingClientRect();
                     const playerRect = player.getBoundingClientRect();
-                    const intersect = !(obsRect.right < playerRect.left || obsRect.left > playerRect.right || obsRect.bottom < playerRect.top || obsRect.top > playerRect.bottom);
+                    
+                    // Tambahkan margin untuk detection yang lebih presisi
+                    const margin = 8;
+                    const shrinkObs = {
+                        left: obsRect.left + margin,
+                        right: obsRect.right - margin,
+                        top: obsRect.top + margin,
+                        bottom: obsRect.bottom - margin
+                    };
+                    const shrinkPlayer = {
+                        left: playerRect.left + margin,
+                        right: playerRect.right - margin,
+                        top: playerRect.top + margin,
+                        bottom: playerRect.bottom - margin
+                    };
+                    
+                    const intersect = !(shrinkObs.right < shrinkPlayer.left || shrinkObs.left > shrinkPlayer.right || shrinkObs.bottom < shrinkPlayer.top || shrinkObs.top > shrinkPlayer.bottom);
                     if (intersect) {
                         obs.hit = true;
                         if (obs.instrumentId === adventureState.correctInstrument.id) {

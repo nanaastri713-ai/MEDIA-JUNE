@@ -3692,7 +3692,8 @@
             spawnTimer: 0,
             finished: false,
             caught: false,
-            correctInstrument: null
+            correctInstrument: null,
+            adventureAudio: null
         };
 
         const gridCoords = [
@@ -4450,7 +4451,40 @@
             openAdventureOverlay();
         }
 
+        function playAdventureMusic(musicUrl) {
+            // Hentikan musik adventure yang sedang dimainkan
+            stopAdventureMusic();
+            
+            // Jika ada URL musik, mainkan dengan loop otomatis
+            if (musicUrl) {
+                adventureState.adventureAudio = new Audio(musicUrl);
+                adventureState.adventureAudio.volume = 0.5;
+                
+                // Atur untuk loop otomatis ketika musik selesai
+                adventureState.adventureAudio.addEventListener('ended', function() {
+                    if (adventureState.running && adventureState.adventureAudio) {
+                        adventureState.adventureAudio.currentTime = 0;
+                        adventureState.adventureAudio.play().catch(e => console.log('Musik tidak bisa diulang:', e));
+                    }
+                }, false);
+                
+                // Mainkan musik
+                adventureState.adventureAudio.play().catch(e => console.log('Musik adventure tidak bisa diputar:', e));
+            }
+        }
+
+        function stopAdventureMusic() {
+            if (adventureState.adventureAudio) {
+                adventureState.adventureAudio.pause();
+                adventureState.adventureAudio.currentTime = 0;
+                adventureState.adventureAudio = null;
+            }
+        }
+
         function openAdventureOverlay() {
+            // Hentikan musik adventure sebelumnya jika ada
+            stopAdventureMusic();
+            
             const overlay = document.getElementById('adventure-overlay');
             const instrument = instrumentMap[state.idx] || { name: 'Alat Musik', icon: '🎵' };
             adventureState.correctInstrument = { id: state.idx, ...instrument };
@@ -4488,6 +4522,12 @@
             adventureState.nextSpawn = 0;
             adventureState.finished = false;
             adventureState.caught = false;
+
+            // Mulai mainkan musik wilayah dengan loop otomatis
+            const musicUrl = cityData[state.idx]?.music;
+            if (musicUrl) {
+                playAdventureMusic(musicUrl);
+            }
 
             document.getElementById('adventure-instruction').innerText = '';
             document.getElementById('adventure-start-btn').classList.add('hidden');
@@ -4711,6 +4751,9 @@
         }
 
         function proceedToQuiz() {
+            // Hentikan musik adventure
+            stopAdventureMusic();
+            
             // Remove event listeners if still attached
             const stage = document.getElementById('adventure-stage');
             stage.removeEventListener('mousemove', handleMouseMove);

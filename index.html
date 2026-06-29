@@ -4621,6 +4621,15 @@
             adventureState.obstacles = adventureState.obstacles.filter(o => !o.done);
         }
 
+        function getInstrumentByIcon(iconToFind) {
+            for (const [id, instrument] of Object.entries(instrumentMap)) {
+                if (instrument.icon === iconToFind) {
+                    return instrument;
+                }
+            }
+            return null;
+        }
+
         function spawnAdventureObstacle(stage, forceCorrect = false) {
             const x = Math.floor(Math.random() * 72) + 14;
             const obstacle = document.createElement('div');
@@ -4636,8 +4645,10 @@
             } else {
                 icon = options[Math.floor(Math.random() * options.length)];
             }
-            if (adventureState.correctInstrument && icon === adventureState.correctInstrument.icon && adventureState.correctInstrument.image) {
-                obstacle.innerHTML = `<img src="${adventureState.correctInstrument.image}" alt="${adventureState.correctInstrument.name}" />`;
+            // Get instrument for this icon and display image
+            const instrumentForIcon = getInstrumentByIcon(icon);
+            if (instrumentForIcon && instrumentForIcon.image) {
+                obstacle.innerHTML = `<img src="${instrumentForIcon.image}" alt="${instrumentForIcon.name}" />`;
             } else {
                 obstacle.innerText = icon;
             }

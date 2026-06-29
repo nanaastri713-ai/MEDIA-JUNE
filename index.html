@@ -2017,8 +2017,13 @@
             border-radius: inherit;
         }
 
-        .adventure-obstacle.hit {
+        .adventure-obstacle.hit-wrong {
             background: #ef4444;
+            color: #ffffff;
+        }
+
+        .adventure-obstacle.hit-correct {
+            background: #22c55e;
             color: #ffffff;
         }
 
@@ -4640,13 +4645,13 @@
                     if (intersect) {
                         obs.hit = true;
                         if (obs.instrumentId === adventureState.correctInstrument.id) {
-                            obs.el.classList.add('hit');
+                            obs.el.classList.add('hit-correct');
                             playSound(523.25, 0.2);
                             adventureState.caught = true;
                             completeAdventure();
                             return;
                         } else {
-                            obs.el.classList.add('hit');
+                            obs.el.classList.add('hit-wrong');
                             playSound(130, 0.2);
                             document.getElementById('adventure-instruction').innerText = '❌ Salah! Coba lagi.';
                         }

@@ -4740,19 +4740,8 @@
         }
 
         function animateCharacterToRegion() {
-            // Hanya beri efek animasi pada avatar mini-game (`adventure-player`),
-            // agar avatar di papan tidak ikut bergerak.
-            const advPlayer = document.getElementById('adventure-player');
-            if (advPlayer) {
-                advPlayer.style.animation = 'bounce 1s ease-in-out';
-                setTimeout(() => {
-                    advPlayer.style.animation = '';
-                    advPlayer.style.transform = 'translateX(-50%)';
-                    document.getElementById('adventure-continue-btn').classList.remove('hidden');
-                }, 1000);
-            } else {
-                document.getElementById('adventure-continue-btn').classList.remove('hidden');
-            }
+            // Tampilkan tombol lanjut ke soal tanpa gerakan tambahan
+            document.getElementById('adventure-continue-btn').classList.remove('hidden');
         }
 
         function proceedToQuiz() {

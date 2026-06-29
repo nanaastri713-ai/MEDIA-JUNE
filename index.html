@@ -4451,7 +4451,7 @@
         function openAdventureOverlay() {
             const overlay = document.getElementById('adventure-overlay');
             const instrument = instrumentMap[state.idx] || { name: 'Alat Musik', icon: '🎵' };
-            adventureState.correctInstrument = instrument;
+            adventureState.correctInstrument = { id: state.idx, ...instrument };
             
             // Update info cards
             const region = cityData[state.idx];
@@ -4597,7 +4597,7 @@
                     const intersect = !(obsRect.right < playerRect.left || obsRect.left > playerRect.right || obsRect.bottom < playerRect.top || obsRect.top > playerRect.bottom);
                     if (intersect) {
                         obs.hit = true;
-                        if (obs.icon === adventureState.correctInstrument.icon) {
+                        if (obs.instrumentId === adventureState.correctInstrument.id) {
                             obs.el.classList.add('hit');
                             playSound(523.25, 0.2);
                             adventureState.caught = true;
@@ -4630,32 +4630,51 @@
             return null;
         }
 
+        function getAllInstruments() {
+            return Object.entries(instrumentMap).map(([id, instrument]) => ({
+                id: parseInt(id),
+                ...instrument
+            }));
+        }
+
         function spawnAdventureObstacle(stage, forceCorrect = false) {
             const x = Math.floor(Math.random() * 72) + 14;
             const obstacle = document.createElement('div');
             obstacle.className = 'adventure-obstacle';
-            // position left in percent; vertical movement handled by translateY
             obstacle.style.left = `${x}%`;
             obstacle.style.transform = `translateY(-140px)`;
-            const baseOptions = adventureState.correctInstrument ? (adventureState.correctInstrument.options || []) : [];
-            const options = [...new Set([adventureState.correctInstrument ? adventureState.correctInstrument.icon : '🎵', ...baseOptions])];
-            let icon;
+            
+            let selectedInstrument;
             if (forceCorrect) {
-                icon = adventureState.correctInstrument ? adventureState.correctInstrument.icon : options[0];
+                selectedInstrument = adventureState.correctInstrument;
             } else {
-                icon = options[Math.floor(Math.random() * options.length)];
+                // Pick random instrument from all 15 regions
+                const allInstruments = getAllInstruments();
+                selectedInstrument = allInstruments[Math.floor(Math.random() * allInstruments.length)];
             }
-            // Get instrument for this icon and display image
-            const instrumentForIcon = getInstrumentByIcon(icon);
-            if (instrumentForIcon && instrumentForIcon.image) {
-                obstacle.innerHTML = `<img src="${instrumentForIcon.image}" alt="${instrumentForIcon.name}" />`;
-            } else {
-                obstacle.innerText = icon;
+            
+            // Display image for the selected instrument
+            if (selectedInstrument && selectedInstrument.image) {
+                obstacle.innerHTML = `<img src="${selectedInstrument.image}" alt="${selectedInstrument.name}" />`;
+            } else if (selectedInstrument && selectedInstrument.icon) {
+                obstacle.innerText = selectedInstrument.icon;
             }
-            obstacle.dataset.icon = icon;
+            
+            // Store the instrument ID for collision detection
+            obstacle.dataset.instrumentId = selectedInstrument.id;
+            obstacle.dataset.instrumentName = selectedInstrument.name;
+            
             stage.appendChild(obstacle);
             const initPx = -140;
-            adventureState.obstacles.push({ el: obstacle, x, yPx: initPx, hit: false, done: false, icon });
+            adventureState.obstacles.push({ 
+                el: obstacle, 
+                x, 
+                yPx: initPx, 
+                hit: false, 
+                done: false, 
+                instrumentId: selectedInstrument.id,
+                instrumentName: selectedInstrument.name
+            });
         }
 
         function completeAdventure() {

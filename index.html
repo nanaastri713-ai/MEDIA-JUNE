@@ -3661,21 +3661,21 @@
         const adventureTiles = new Set(Array.from({ length: cityData.length - 1 }, (_, i) => i + 1));
         let nextAreaAction = 'adventure';
         const instrumentMap = {
-            1: { name: 'Sasando', icon: '🎶', image: 'https://raw.githubusercontent.com/chuyasajaa998-netizen/MEDIA-RO/3361e6ff012f6431811a48187941b6986752e6de/ALAT%20MUSIK%20SASANDO.png', options: ['🎶','🎸','🎤','🥁'] },
-            2: { name: 'Suling', icon: '🎵', options: ['🎵','🎸','🎼','🥁'] },
-            3: { name: 'Sitar', icon: '🎸', options: ['🎸','🎵','🥁','🎼'] },
-            4: { name: 'Keroncong', icon: '🎻', options: ['🎻','🎼','🎸','🎵'] },
-            5: { name: 'Gendang', icon: '🥁', options: ['🥁','🎸','🎵','🎼'] },
-            6: { name: 'Kecak', icon: '🗣️', options: ['🗣️','🎸','🥁','🎼'] },
-            7: { name: 'Genggong', icon: '🎶', options: ['🎶','🎻','🥁','🎼'] },
-            8: { name: 'Gandrang', icon: '🥁', options: ['🥁','🎸','🎵','🎼'] },
-            9: { name: 'Kolintang', icon: '🥁', options: ['🥁','🎻','🎵','🎸'] },
-            10: { name: 'Tifa', icon: '🥁', options: ['🥁','🎤','🎼','🎸'] },
-            11: { name: 'Rebana', icon: '🥁', options: ['🥁','🎵','🎸','🎼'] },
-            12: { name: 'Sampe', icon: '🪕', options: ['🪕','🎼','🥁','🎸'] },
-            13: { name: 'Talempong', icon: '🥁', options: ['🥁','🎵','🎼','🎸'] },
-            14: { name: 'Tifa', icon: '🥁', options: ['🥁','🎼','🎸','🎵'] },
-            15: { name: 'Angklung', icon: '🎶', image: 'https://raw.githubusercontent.com/lorrainemydth-gif/MEDIA-RO/c98900fd489d86e38153e06b1ea237685d260695/angklung%20(1).png', options: ['🎶','🥁','🎸','🎻'] }
+            1: { name: 'Sasando', icon: '🎶', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20SASANDO%20NTT.png', options: ['🎶','🎸','🎤','🥁'] },
+            2: { name: 'Serune Kalee', icon: '🎵', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20SERUNE%20KALEE%20ACEH.png', options: ['🎵','🎸','🎼','🥁'] },
+            3: { name: 'Kolintang', icon: '🎸', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20KOLINTANG%20SULUT.png', options: ['🎸','🎵','🥁','🎼'] },
+            4: { name: 'Tifa', icon: '🎻', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20TIFA%20MALUKU.png', options: ['🎻','🎼','🎸','🎵'] },
+            5: { name: 'Gitar Gambus', icon: '🥁', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20GITAR%20KEPRI.png', options: ['🥁','🎸','🎵','🎼'] },
+            6: { name: 'Gordang Sambilan', icon: '🗣️', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20GORDANG%20SUMUT.png', options: ['🗣️','🎸','🥁','🎼'] },
+            7: { name: 'Sape', icon: '🎶', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20SAFE%20KALBAR.png', options: ['🎶','🎻','🥁','🎼'] },
+            8: { name: 'Suling Lembang', icon: '🥁', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20SULING%20SULSEL.png', options: ['🥁','🎸','🎵','🎼'] },
+            9: { name: 'Kompang', icon: '🥁', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20KOMPANG%20LAMPUNG.png', options: ['🥁','🎻','🎵','🎸'] },
+            10: { name: 'Rebab', icon: '🥁', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20REBAB%20JATIM.png', options: ['🥁','🎤','🎼','🎸'] },
+            11: { name: 'Gendang Melayu', icon: '🥁', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20GENDANG%20JAMBI.png', options: ['🥁','🎵','🎸','🎼'] },
+            12: { name: 'Talempong', icon: '🪕', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20TALEMPONG%20SUMBAR.png', options: ['🪕','🎼','🥁','🎸'] },
+            13: { name: 'Kenong', icon: '🥁', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20KENONG%20SUMSEL.png', options: ['🥁','🎵','🎼','🎸'] },
+            14: { name: 'Gong Luang', icon: '🥁', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20GONG%20BALI.png', options: ['🥁','🎼','🎸','🎵'] },
+            15: { name: 'Angklung', icon: '🎶', image: 'https://raw.githubusercontent.com/nanaastri713-ai/MEDIA-JUNE/73c9916788f7bd5584166aef2da80b7b758af276/ALAT%20MUSIK%20ANGKLUNG%20JABAR.png', options: ['🎶','🥁','🎸','🎻'] }
         };
         const adventureState = {
             running: false,
